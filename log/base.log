@@ -1,0 +1,30 @@
+2017-09-29 21:44:11,165 DEBUG (BaseJdbcLogger.java:145)- ==>  Preparing: SELECT count(*) FROM t_user A WHERE 1 = 1 
+2017-09-29 21:44:11,190 DEBUG (BaseJdbcLogger.java:145)- ==> Parameters: 
+2017-09-29 21:44:11,204 DEBUG (BaseJdbcLogger.java:145)- <==      Total: 1
+2017-09-29 21:44:11,209 DEBUG (BaseJdbcLogger.java:145)- ==>  Preparing: SELECT * FROM t_user A WHERE 1=1 limit ?,? 
+2017-09-29 21:44:11,210 DEBUG (BaseJdbcLogger.java:145)- ==> Parameters: 0(Integer), 10(Integer)
+2017-09-29 21:44:11,217 DEBUG (BaseJdbcLogger.java:145)- <==      Total: 10
+2017-09-29 21:45:33,774 DEBUG (BaseJdbcLogger.java:145)- ==>  Preparing: SELECT count(*) FROM t_user A WHERE 1 = 1 
+2017-09-29 21:45:33,775 DEBUG (BaseJdbcLogger.java:145)- ==> Parameters: 
+2017-09-29 21:45:33,789 DEBUG (BaseJdbcLogger.java:145)- <==      Total: 1
+2017-09-29 21:45:33,791 DEBUG (BaseJdbcLogger.java:145)- ==>  Preparing: SELECT * FROM t_user A WHERE 1=1 limit ?,? 
+2017-09-29 21:45:33,792 DEBUG (BaseJdbcLogger.java:145)- ==> Parameters: 0(Integer), 10(Integer)
+2017-09-29 21:45:33,801 DEBUG (BaseJdbcLogger.java:145)- <==      Total: 10
+2017-09-29 22:11:24,260 DEBUG (BaseJdbcLogger.java:145)- ==>  Preparing: SELECT count(*) FROM t_user A WHERE 1 = 1 
+2017-09-29 22:11:24,282 DEBUG (BaseJdbcLogger.java:145)- ==> Parameters: 
+2017-09-29 22:11:24,293 DEBUG (BaseJdbcLogger.java:145)- <==      Total: 1
+2017-09-29 22:11:24,297 DEBUG (BaseJdbcLogger.java:145)- ==>  Preparing: SELECT * FROM t_user A WHERE 1=1 limit ?,? 
+2017-09-29 22:11:24,298 DEBUG (BaseJdbcLogger.java:145)- ==> Parameters: 0(Integer), 10(Integer)
+2017-09-29 22:11:24,307 DEBUG (BaseJdbcLogger.java:145)- <==      Total: 10
+2017-09-29 22:18:55,010 DEBUG (BaseJdbcLogger.java:145)- ==>  Preparing: SELECT count(*) FROM t_user A WHERE 1 = 1 
+2017-09-29 22:18:55,032 DEBUG (BaseJdbcLogger.java:145)- ==> Parameters: 
+2017-09-29 22:18:55,045 DEBUG (BaseJdbcLogger.java:145)- <==      Total: 1
+2017-09-29 22:18:55,049 DEBUG (BaseJdbcLogger.java:145)- ==>  Preparing: SELECT * FROM t_user A WHERE 1=1 limit ?,? 
+2017-09-29 22:18:55,050 DEBUG (BaseJdbcLogger.java:145)- ==> Parameters: 0(Integer), 10(Integer)
+2017-09-29 22:18:55,055 DEBUG (BaseJdbcLogger.java:145)- <==      Total: 10
+2017-09-29 22:20:25,090 DEBUG (BaseJdbcLogger.java:145)- ==>  Preparing: SELECT count(*) FROM t_user A WHERE 1 = 1 
+2017-09-29 22:20:25,114 DEBUG (BaseJdbcLogger.java:145)- ==> Parameters: 
+2017-09-29 22:20:25,125 DEBUG (BaseJdbcLogger.java:145)- <==      Total: 1
+2017-09-29 22:20:25,128 DEBUG (BaseJdbcLogger.java:145)- ==>  Preparing: SELECT * FROM t_user A WHERE 1=1 limit ?,? 
+2017-09-29 22:20:25,129 DEBUG (BaseJdbcLogger.java:145)- ==> Parameters: 0(Integer), 10(Integer)
+2017-09-29 22:20:25,136 DEBUG (BaseJdbcLogger.java:145)- <==      Total: 10

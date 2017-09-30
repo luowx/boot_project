@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>人员信息</title>
+    <link th:href="@{../css/dpl-min.css}"  rel="stylesheet" type="text/css" />
+    <link th:href="@{../css/bui-min.css}" rel="stylesheet" type="text/css" />
+    <link th:href="@{../css/main-min.css}" rel="stylesheet" type="text/css" />
+    <link th:href="@{../css/page-min.css}" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div class="container" id="container">
+<div class="search_content">
+        <div class="row panel panel-default" style="margin-left: auto">
+                <div class="panel-header">
+                    <h3>查询条件</h3>
+                </div>
+                <form id="searchForm" class="form-horizontal span32 panel-body" method="post">
+                    <div class="row search-bar pull-left well-small">
+                        <div class="control-group span6" style="margin-left: 25px;">
+                            <label class="control-label" style="width: auto">姓名</label>
+                            <div class="controls">
+                                <input type="text" class="input-normal control-text" name="user_name" id="user_name"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row search-bar pull-left well-small">
+                        <div class="control-group span6" style="margin-left: 25px;">
+                            <label class="control-label" style="width: auto">地址</label>
+                            <div class="controls">
+                                <input type="text" class="input-normal control-text" name="user_addr" id="user_addr"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bui-grid-tbar pull-left well-small" style="margin:-8px">
+                        <div class="bui-bar" role="toolbar" id="bar1" aria-disabled="false" aria-pressed="false">
+                            <ul class="bui-bar bui-grid-button-bar none" role="toolbar" id="bar2"
+                                aria-disabled="false" aria-pressed="false">
+                                <li class="bui-bar-item-button bui-bar-item bui-inline-block">
+                                    <button type="button" class="button button-small" onclick="queryFunction();">
+                                        <i class="icon-search"></i>查询
+                                    </button>
+                                </li>
+                                <li class="bui-bar-item-button bui-bar-item bui-inline-block">
+                                    <button type="button" class="button button-small" onclick="addFunction();">
+                                        <i class="icon-plus"></i>新增
+                                    </button>
+                                </li>
+                                <li class="bui-bar-item-button bui-bar-item bui-inline-block">
+                                    <button type="button" class="button button-small" onclick="delFunction();">
+                                        <i class=" icon-remove"></i>删除
+                                    </button>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </form>
+        </div>
+    <br/>
+    <div class="panel panel-default">
+        <div class="panel-header">
+            <h3>查询结果</h3>
+        </div>
+        <div class="panel-body" id="grid"></div>
+    </div>
+
+    <div id="content" class="hide">
+        <form id="add_form" class="form-horizontal">
+            <div class="row">
+                <div class="control-group span8">
+                    <label class="control-label">用户姓名：</label>
+                    <div class="controls">
+                        <input type="text" id="a_username" class="input-normal control-text" data-rules="{required : true}"/>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="control-group span8">
+                    <label class="control-label">地址：</label>
+                    <div class="controls">
+                        <input type="text" id="a_address" class="input-normal control-text" data-rules="{required : true}"/>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+</div>
+    <script th:src="@{../js/jquery-1.8.1.min.js}"></script>
+    <script th:src="@{../js/bui.js}"></script>
+    <script th:src="@{../js/config.js}"></script>
+    <script th:src="@{../js/common/page.js}"></script>
+    <script th:src="@{../js/common/search-min.js}"></script>
+    <script th:src="@{../js/layout-min.js}"></script>
+    <script th:src="@{../js/overlay.js}"></script>
+
+<script th:inline="javascript">
+        BUI.use(['common/search','bui/tree','bui/menu','bui/editor','bui/data/node','bui/grid','bui/toolbar','bui/tooltip','bui/data','bui/layout','bui/overlay'],
+            function(Search,Tree,Menu,Editor,Node,Grid,Toolbar,Tooltip,Data,Layout,Overlay){
+            var ctx = /*[[@{/user/}]]*/ '';
+            var id;
+            var urls = {
+                query : ctx + "query",
+                save : ctx + "save",
+                del : ctx + "del",
+                getAllUser : ctx + "getAllUser"
+            };
+            var columns = [
+                    {title : 'ID',dataIndex :'id', width:'10%'},
+                    {title : '姓名',dataIndex :'name', width:'20%'},
+                    {title : '地址',dataIndex :'address', width:'20%'},
+                    {title : '创建时间',dataIndex : 'createTime',width:'20%'},
+                    {title : '更新时间',dataIndex : 'modifyTime',width:'20%'},
+                    {title : '操作',dataIndex : '',width:'10%',renderer:function () {
+                        return '<button class="button button-small btn-edit" id="user_edit"> 修改 </button>';
+                    }}
+                ];
+
+            var store = new BUI.Data.Store({
+                    url : urls.query,
+                    autoLoad:true, //自动加载数据
+                    pageSize:10	// 配置分页数目
+                }),
+                grid = new Grid.Grid({
+                    render:'#grid',
+                    width:'100%',
+                    columns : columns,
+                    loadMask: true, //加载数据时显示屏蔽层
+                    store: store,
+                    // 底部工具栏
+                    bbar:{
+                        // pagingBar:表明包含分页栏
+                        pagingBar:true
+                    },
+                    plugins : [Grid.Plugins.CheckSelection]
+                });
+            grid.render();
+
+            var dialog = new Overlay.Dialog({
+                title:'新增/修改用户',
+                width:400,
+                height:200,
+               //closeAction : 'destroy', //每次关闭dialog释放
+                contentId:'content',
+                buttons:[
+                 {
+                     text:'确定',
+                     elCls : 'button button-primary',
+                     handler : function(){
+                         if ($.trim($("#a_username").val())==''){
+                             return BUI.Message.Alert('姓名不可为空');
+                         }
+                         if ($.trim($("#a_address").val())==''){
+                             return BUI.Message.Alert('地址不可为空');
+                         }
+                         $.ajax({
+                             url:urls.save,
+                             dataType:'json',
+                             data:{
+                                 id : id,
+                                 name:$.trim($("#a_username").val()),
+                                 address:$.trim($("#a_address").val())
+                             },
+                             success:function (data) {
+                                 BUI.Message.Alert('成功');
+                                 store.load({
+                                     start:0
+                                 });
+                             }
+                         });
+                         this.hide();
+                    }
+                 },{
+                    text:'关闭',
+                    elCls : 'button',
+                    handler : function(){
+                        this.hide();
+                    }
+                }],
+            });
+
+             queryFunction = function() {
+               store.load({
+                   start:0,
+                   name:$.trim($("#user_name").val()),
+                   address:$.trim($("#user_addr").val()),
+               });
+            }
+
+            addFunction = function () {
+                $("#a_username").val("");
+                $("#a_address").val("");
+                id = "";
+                dialog.show();
+            }
+
+            grid.on('cellclick',function (ev) {
+                var records = ev.record;
+                var selections = grid.getSelection();
+                var target = $(ev.domTarget);
+                if (target.hasClass('btn-edit')){
+                    editFunction(records);
+                }
+            });
+
+            delFunction = function () {
+                var sec = grid.getSelection();
+                var secIds = [];
+                for (var i=0;i<sec.length;i++){
+                    secIds.push(sec[i].id);
+                }
+                $.ajax({
+                    url:urls.del,
+                    data:{
+                        ids:secIds
+                    },
+                    traditional : true,
+                    success:function (data) {
+                        BUI.Message.Alert('删除成功');
+                        store.load({
+                            start:0
+                        });
+                    }
+                });
+            }
+
+             editFunction = function (records) {
+                id = records.id;
+                $("#a_username").val(records.name);
+                $("#a_address").val(records.address);
+                dialog.show();
+            }
+        });
+    </script>
+</body>
+</html>
